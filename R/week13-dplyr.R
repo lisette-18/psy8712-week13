@@ -10,7 +10,7 @@ conn <- dbConnect(MariaDB(), #use dbConnect as required by class
                   password=key_get("latis-mysql","horne146"),
                   host="mysql-prod5.oit.umn.edu",
                   port=3306,
-                  ssl.ca = "mysql_hotel_umn_20220728_interm.cer")
+                  ssl.ca = "../mysql_hotel_umn_20220728_interm.cer")
 
 show_dbs <- dbGetQuery(conn, "SHOW DATABASES;") #show databases present
 dbExecute(conn, "USE cla_tntlab;")
