@@ -32,3 +32,37 @@ week13_tbl <- tibble(employees_tbl %>% #use tibble() to create as a tibble
                        full_join(offices_tbl, by = "city")) #use full_join to combine based on the previous two databases being combined
 
 write_csv(week13_tbl, "../out/week13.csv")
+
+#Analysis
+
+t_managers <- week13_tbl %>%
+  summarize(n()) #total number of managers
+
+t_managers
+
+u_managers <- week13_tbl %>%
+  select(employee_id) %>% #selecting employee ids
+  unique() %>% #getting the unique IDs to avoid repetition 
+  nrow() #total number of unique managers
+
+u_managers
+
+non_managerhire <- week13_tbl %>% 
+  filter(manager_hire == "N") %>% #filter for those who were not hired as a manager first
+  group_by(city) %>% #group by the locatio in which they work
+  summarize(n()) #number of managers split by location, but only include those who were not originally hired as managers.
+
+non_managerhire
+
+employment_performance <- week13_tbl %>%
+  group_by(performance_group) %>% #using group_by to organize data into groups based on performance level
+  summarize(mean = mean(yrs_employed), #summarize the average yrs people have been employed
+            sd = sd(yrs_employed)) #summarize the sd of the yrs people have been employed
+
+employment_performance
+
+summary <- week13_tbl %>%
+  select(type, employee_id, test_score) %>% #using the select function to pick the three variables required
+  arrange(type, desc(test_score)) #use function arrange to organize by location and desc() to make test scores in decending order
+
+summary
